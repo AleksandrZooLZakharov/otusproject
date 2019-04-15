@@ -1,0 +1,6 @@
+[submodule "search_engine_crawler"]
+	path = search_engine_crawler
+	url = https://github.com/express42/search_engine_crawler.git
+[submodule "search_engine_ui"]
+	path = search_engine_ui
+	url = https://github.com/express42/search_engine_ui.git
