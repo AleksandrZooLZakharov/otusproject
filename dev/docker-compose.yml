@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  mongo_db:
+    image: mongo:3.2.21
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      - back_net
+      - front_net
+  ui:
+    build: ./ui
+    image: ${USERNAME}/ui:ui_crawler
+    ports:
+      - 9292:${UI_PORT}/tcp
+    networks:
+      - front_net
+  crawler:
+    build: ./crawler
+    image: ${USERNAME}/crawler:engine_crawler
+    networks:
+      - back_net
+  rabbit_mq:
+    build: ./rabbit
+    image: ${USERNAME}/rabbit:latest
+    networks:
+      - back_net
+
+volumes:
+  mongo_db:
+
+networks:
+  back_net:
+  front_net:
