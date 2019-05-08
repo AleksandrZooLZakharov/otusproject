@@ -18,6 +18,8 @@ cd /srv/gitlab/
 
 echo "mkdir+cd - done, starting printf##########################################################################"
 
+sleep 1
+
 sudo bash -c 'printf \
 "web:\n\
   image: \"gitlab/gitlab-ce:latest\"\n\
@@ -26,6 +28,7 @@ sudo bash -c 'printf \
   environment:\n\
     GITLAB_OMNIBUS_CONFIG: |\n\
       external_url \"http://%s/\"\n\
+      gitlab_rails['initial_root_password'] = 'password'
   ports:\n\
     - \"80:80\"\n\
     - \"443:443\"\n\
@@ -35,21 +38,9 @@ sudo bash -c 'printf \
     - \"/srv/gitlab/logs:/var/log/gitlab\"\n\
     - \"/srv/gitlab/data:/var/opt/gitlab\"\n" "$(curl ifconfig.me/ip)" > docker-compose.yml' 
 
+sleep 1
+
 echo "ALL PREPARATIONS IS DONE!##########################################################################"
-
-
-sudo gpasswd -a $USER docker #&& newgrp docker
-
-echo "groups done"
-
-sudo service docker restart
-
-echo "docker service restarted"
-
-pwd
-
-echo "Ready to Docker-compose kick-start! )"
-#sleep 500
 
 sudo docker-compose up -d
 
